@@ -14,6 +14,7 @@
     <!-- Calendly Popup Widget Styles & JS -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script src="cms-data.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -78,15 +79,20 @@
             overflow-y: scroll;
             scroll-behavior: smooth;
             overscroll-behavior: none;
-            scroll-snap-type: y mandatory;
+            /* Scroll snapping disabled to allow free manual scrolling from start to finish */
+            scroll-snap-type: none !important;
+        }
+
+        #snap-container.no-snap-container {
+            scroll-snap-type: none !important;
         }
 
         .snap-section {
             height: 100vh;
             position: relative;
             overflow: hidden;
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+            scroll-snap-align: none !important;
+            scroll-snap-stop: normal;
         }
 
         .snap-section.no-snap {
@@ -362,7 +368,7 @@
         /* Desktop Snap Scroll offset to prevent fixed navbar overlap */
         @media (min-width: 768px) {
             .snap-section {
-                padding-top: 96px;
+                padding-top: 80px; /* Reduced from 96px to minimize dead space */
             }
         }
 
@@ -630,6 +636,25 @@
                 font-size: 20px !important;
             }
         }
+
+        /* ── Parallax Background Patterns ── */
+        .bg-pattern-primary {
+            background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23002442'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+        .bg-pattern-secondary {
+            background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23006b58'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+        }
+
+        /* ── Responsive Section Heights (Desktop Cutoff Prevention) ── */
+        @media (min-width: 768px) {
+            #metricas, #especialidades, #tecnologia, #sobre-mi, #faq {
+                height: auto !important;
+                min-height: 100vh !important;
+                overflow: visible !important;
+            }
+        }
     </style>
 </head>
 
@@ -637,7 +662,7 @@
 
     <!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
     <nav id="main-nav" class="nav-dark">
-        <div class="nav-logo">Dr. Daniel Gómez</div>
+        <div class="nav-logo" id="nav-brand-logo">Dr. Daniel Gómez</div>
 
         <!-- Desktop links -->
         <div class="nav-links hidden md:flex">
@@ -785,7 +810,7 @@
             style="background:#f4f3f7;">
             <!-- Parallax Background Grid Texture -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="0.12" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23002442\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute inset-0 opacity-[0.08] bg-pattern-primary" data-speed="0.12"></div>
                 <div class="parallax-bg absolute -right-20 -top-20 w-[400px] h-[400px] rounded-full bg-[#006b58]/12 blur-[100px]" data-speed="-0.08"></div>
             </div>
             <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
@@ -807,7 +832,7 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="specialties-grid">
                     <div onclick="openSpecialtyModal('mano')"
                         class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal"
                         style="--glow-color: #81a4cf; --glow-shadow: rgba(16,58,95,0.15); transition-delay:0.05s;">
@@ -867,7 +892,7 @@
                 <!-- Collapsible Extra Services Container -->
                 <div id="extra-services"
                     class="max-h-0 opacity-0 overflow-hidden transition-all duration-700 ease-in-out">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6" id="extra-services-grid">
                         <!-- Card 4: Tendones -->
                         <div onclick="openSpecialtyModal('tendones')"
                             class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px]"
@@ -936,7 +961,7 @@
         <section class="snap-section flex items-center" id="tecnologia" data-theme="light">
             <!-- Parallax Background Grid Texture -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="-0.1" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23006b58\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute inset-0 opacity-[0.08] bg-pattern-secondary" data-speed="-0.1"></div>
                 <div class="parallax-bg absolute -right-20 -bottom-20 w-[400px] h-[400px] rounded-full bg-[#006b58]/12 blur-[100px]" data-speed="0.06"></div>
             </div>
             <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
@@ -970,7 +995,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-4 text-white rounded-[32px] p-8 flex flex-col justify-between reveal"
+                    <div id="tech-card-1" class="col-span-12 md:col-span-4 text-white rounded-[32px] p-8 flex flex-col justify-between reveal"
                         style="background:#002442; transition-delay:0.05s;">
                         <span class="material-symbols-outlined text-3xl"
                             style="color:#92f5d9;">precision_manufacturing</span>
@@ -982,7 +1007,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between reveal"
+                    <div id="tech-card-2" class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between reveal"
                         style="background:#e8e8eb; transition-delay:0.12s;">
                         <div class="flex items-center gap-2 mb-4">
                             <div class="flex -space-x-3">
@@ -1004,7 +1029,7 @@
                         </div>
                     </div>
 
-                    <div class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between overflow-hidden relative reveal"
+                    <div id="tech-card-3" class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between overflow-hidden relative reveal"
                         style="background:#006b58; color:#fff; transition-delay:0.18s;">
                         <div class="relative z-10">
                             <div class="text-5xl font-bold mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">24h
@@ -1025,16 +1050,16 @@
         <section class="snap-section flex items-center" id="sobre-mi" data-theme="light" style="background:#ffffff;">
             <!-- Parallax Background Grid Texture -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="-0.1" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23006b58\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute inset-0 opacity-[0.08] bg-pattern-secondary" data-speed="-0.1"></div>
                 <div class="parallax-bg absolute -left-20 -bottom-20 w-[400px] h-[400px] rounded-full bg-[#103a5f]/12 blur-[100px]" data-speed="0.06"></div>
             </div>
-            <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto pt-4 md:pt-8">
+            <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto pt-0">
                 <div class="sobre-mi-grid grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
 
                     <!-- Foto del doctor -->
                     <div class="relative reveal">
                         <div class="doctor-photo-wrap relative rounded-[40px] overflow-hidden shadow-2xl shadow-primary/15"
-                            style="height:600px;">
+                            style="height: clamp(300px, 55vh, 600px);">
                             <img src="doctor-photo.png" alt="Dr. Daniel Gómez" class="w-full h-full object-cover"
                                 style="object-position: center 5%;" />
                             <div class="absolute inset-0"
@@ -1061,7 +1086,7 @@
                     </div>
 
                     <!-- Texto biográfico -->
-                    <div class="space-y-6 reveal md:pt-12" style="transition-delay:0.15s;">
+                    <div class="space-y-6 reveal md:pt-0" style="transition-delay:0.15s;">
                         <span class="text-xs font-bold tracking-widest uppercase"
                             style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">Sobre Mí</span>
                         <h2 class="text-3xl md:text-5xl font-bold text-primary leading-tight"
@@ -1080,21 +1105,21 @@
 
                         <div class="grid grid-cols-2 gap-4 pt-2">
                             <div class="rounded-2xl p-5" style="background:#f4f3f7;">
-                                <div class="text-xs font-bold text-on-surface-variant mb-1"
+                                <div id="about-formation-title" class="text-xs font-bold text-on-surface-variant mb-1"
                                     style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">FORMACIÓN
                                 </div>
-                                <div class="text-sm font-semibold text-primary"
+                                <div id="about-formation-school" class="text-sm font-semibold text-primary"
                                     style="font-family:'Plus Jakarta Sans',sans-serif;">UNAM · Hospital de Ortopedia
                                 </div>
-                                <div class="text-xs text-on-surface-variant mt-1">Fellowship en Microcirugía — EUA</div>
+                                <div id="about-formation-sub" class="text-xs text-on-surface-variant mt-1">Fellowship en Microcirugía — EUA</div>
                             </div>
                             <div class="rounded-2xl p-5" style="background:#f4f3f7;">
-                                <div class="text-xs font-bold text-on-surface-variant mb-1"
+                                <div id="about-memberships-title" class="text-xs font-bold text-on-surface-variant mb-1"
                                     style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">
                                     MEMBRESÍAS</div>
-                                <div class="text-sm font-semibold text-primary"
+                                <div id="about-memberships-societies" class="text-sm font-semibold text-primary"
                                     style="font-family:'Plus Jakarta Sans',sans-serif;">AMCIO · ASSH · IFSSH</div>
-                                <div class="text-xs text-on-surface-variant mt-1">Sociedades internacionales de mano
+                                <div id="about-memberships-sub" class="text-xs text-on-surface-variant mt-1">Sociedades internacionales de mano
                                 </div>
                             </div>
                         </div>
@@ -1114,7 +1139,7 @@
                         necesitas saber.</h2>
                 </div>
 
-                <div class="space-y-3 reveal" style="transition-delay:0.15s;">
+                <div class="space-y-3 reveal" id="faq-accordion" style="transition-delay:0.15s;">
 
                     <!-- FAQ 1 -->
                     <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
@@ -1223,7 +1248,7 @@
 
         <!-- ── 7. TESTIMONIOS + FOOTER (merged, dark) ── -->
         <section class="snap-section flex flex-col justify-between" id="contacto" data-theme="dark"
-            style="background:#002442; height: auto !important; min-height: 100vh !important; overflow: visible !important; padding-top: 100px; padding-bottom: 40px;">
+            style="background:#002442; height: auto !important; min-height: 100vh !important; overflow: visible !important; padding-top: 100px; padding-bottom: 0px !important;">
 
             <!-- Testimonios -->
             <div class="flex-1 flex flex-col justify-center px-5 md:px-16 max-w-7xl mx-auto w-full relative z-10">
@@ -1249,7 +1274,7 @@
 
                     <!-- Carrusel Container -->
                     <div class="carousel-outer reveal" style="transition-delay:0.15s;">
-                        <div class="carousel-track">
+                        <div class="carousel-track" id="testimonials-track">
                         <!-- Set 1 -->
                         <div class="testimonial-card">
                             <div class="flex gap-1 mb-3">★★★★★</div>
@@ -1423,10 +1448,9 @@
         </div>
 
             <!-- Footer -->
-            <footer class="border-t px-5 md:px-16 py-6" style="border-color:rgba(255,255,255,0.1);">
+            <footer class="border-t px-5 md:px-16 py-6" style="border-color:rgba(255,255,255,0.1); scroll-snap-align: end;">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto">
-                    <div class="text-lg font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Dr.
-                        Daniel Gómez</div>
+                    <div class="text-lg font-bold text-white" id="footer-brand-logo" style="font-family:'Plus Jakarta Sans',sans-serif;">Dr. Daniel Gómez</div>
                     <div class="flex gap-6">
                         <a class="text-xs font-semibold hover:text-white transition-colors"
                             style="color:rgba(255,255,255,0.5); font-family:'Plus Jakarta Sans',sans-serif;"
@@ -1520,6 +1544,226 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+
+            // ─── CMS INITIALIZATION ──────────────────────────────────────────
+            function initCMS() {
+                if (typeof CMS_DATA === 'undefined') {
+                    console.warn('CMS_DATA is not loaded!');
+                    return;
+                }
+                
+                // 1. Brand Logo
+                const brandLogoEl = document.getElementById('nav-brand-logo');
+                if (brandLogoEl) brandLogoEl.textContent = CMS_DATA.brandName;
+                const footerBrandEl = document.getElementById('footer-brand-logo');
+                if (footerBrandEl) footerBrandEl.textContent = CMS_DATA.brandName;
+
+                // 2. Hero Section
+                const heroTag = document.querySelector('#inicio span.rounded-full');
+                if (heroTag) heroTag.textContent = CMS_DATA.hero.tag;
+                const heroTitle = document.querySelector('#inicio h1');
+                if (heroTitle) heroTitle.innerHTML = CMS_DATA.hero.title;
+                const heroDesc = document.querySelector('#inicio p.text-lg');
+                if (heroDesc) heroDesc.textContent = CMS_DATA.hero.description;
+                const heroImg = document.querySelector('#inicio img.parallax-bg');
+                if (heroImg) heroImg.src = CMS_DATA.hero.image;
+                const heroCta = document.querySelector('#hero-cta-btn');
+                if (heroCta) {
+                    heroCta.innerHTML = `${CMS_DATA.hero.ctaText} <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>`;
+                }
+
+                // 3. Stats Section
+                const statsGrid = document.querySelector('#metricas .grid');
+                if (statsGrid) {
+                    statsGrid.innerHTML = CMS_DATA.stats.map(s => `
+                        <div class="text-center px-2 md:px-8 py-2 md:py-4">
+                            <div class="text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2"
+                                style="font-family:'Plus Jakarta Sans',sans-serif;">${s.value}</div>
+                            <div class="text-[10px] md:text-xs font-semibold text-on-surface-variant tracking-wider md:tracking-widest"
+                                style="font-family:'Plus Jakarta Sans',sans-serif;">${s.label}</div>
+                        </div>
+                    `).join('');
+                }
+                const statsTitle = document.querySelector('#metricas h2');
+                if (statsTitle) statsTitle.innerHTML = CMS_DATA.statsSection.title;
+                const statsDesc = document.querySelector('#metricas p');
+                if (statsDesc) statsDesc.innerHTML = CMS_DATA.statsSection.description;
+
+                // 4. Specialties Section Header
+                const specsTag = document.querySelector('#especialidades span.tracking-widest');
+                if (specsTag) specsTag.textContent = CMS_DATA.specialtiesSection.tag;
+                const specsTitle = document.querySelector('#especialidades h2');
+                if (specsTitle) specsTitle.innerHTML = CMS_DATA.specialtiesSection.title;
+                const toggleBtnText = document.querySelector('#toggle-services-btn .btn-text');
+                if (toggleBtnText) toggleBtnText.textContent = CMS_DATA.specialtiesSection.btnExpand;
+
+                // 5. Specialties Grid rendering
+                const specKeys = Object.keys(CMS_DATA.specialties);
+                const primarySpecs = specKeys.slice(0, 3);
+                const extraSpecs = specKeys.slice(3, 6);
+
+                const renderSpecCard = (key, delay) => {
+                    const s = CMS_DATA.specialties[key];
+                    const theme = {
+                        mano: { glow: '#81a4cf', shadow: 'rgba(16,58,95,0.15)', bg: '#103a5f', iconColor: '#81a4cf' },
+                        codo: { glow: '#92f5d9', shadow: 'rgba(0,107,88,0.15)', bg: '#92f5d9', iconColor: '#005141' },
+                        deporte: { glow: '#ffdcbd', shadow: 'rgba(102,62,13,0.15)', bg: '#ffdcbd', iconColor: '#663e0d' },
+                        tendones: { glow: '#ffdcbd', shadow: 'rgba(102,62,13,0.15)', bg: '#ffdcbd', iconColor: '#663e0d' },
+                        reemplazo: { glow: '#81a4cf', shadow: 'rgba(16,58,95,0.15)', bg: '#103a5f', iconColor: '#81a4cf' },
+                        nerviosa: { glow: '#92f5d9', shadow: 'rgba(0,107,88,0.15)', bg: '#92f5d9', iconColor: '#005141' }
+                    }[key] || { glow: '#81a4cf', shadow: 'rgba(16,58,95,0.15)', bg: '#103a5f', iconColor: '#81a4cf' };
+
+                    return `
+                        <div onclick="openSpecialtyModal('${key}')"
+                            class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal"
+                            style="--glow-color: ${theme.glow}; --glow-shadow: ${theme.shadow}; transition-delay:${delay}s;">
+                            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
+                                style="background:${theme.bg};">
+                                <span class="material-symbols-outlined text-2xl" style="color:${theme.iconColor};">${s.icon}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-primary mb-3"
+                                style="font-family:'Plus Jakarta Sans',sans-serif;">${s.title}</h3>
+                            <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">${s.description}</p>
+                            <a class="text-xs font-bold flex items-center gap-1 mt-4"
+                                style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;"
+                                href="javascript:void(0)"
+                                onclick="event.stopPropagation(); openSpecialtyModal('${key}')">SABER MÁS <span
+                                    class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+                        </div>
+                    `;
+                };
+
+                const specGrid = document.getElementById('specialties-grid');
+                if (specGrid) {
+                    specGrid.innerHTML = primarySpecs.map((key, i) => renderSpecCard(key, 0.05 + i * 0.07)).join('');
+                }
+                const extraGrid = document.getElementById('extra-services-grid');
+                if (extraGrid) {
+                    extraGrid.innerHTML = extraSpecs.map(key => renderSpecCard(key, 0)).join('');
+                }
+
+                // 6. Technology Section
+                const techTag = document.querySelector('#tecnologia span.tracking-widest');
+                if (techTag) techTag.textContent = CMS_DATA.technology.tag;
+                const techTitle = document.querySelector('#tecnologia h2');
+                if (techTitle) techTitle.innerHTML = CMS_DATA.technology.title;
+                const techDesc = document.querySelector('#tecnologia p.text-lg');
+                if (techDesc) techDesc.innerHTML = CMS_DATA.technology.description;
+                
+                const techImg = document.querySelector('#tecnologia img.group-hover\\:scale-105');
+                if (techImg) techImg.src = CMS_DATA.technology.image;
+                
+                const techBentoTag = document.querySelector('#tecnologia .bento-img-wrap div.text-xs');
+                if (techBentoTag) techBentoTag.textContent = CMS_DATA.technology.bentoImageTag;
+                const techBentoTitle = document.querySelector('#tecnologia .bento-img-wrap div.text-base');
+                if (techBentoTitle) techBentoTitle.textContent = CMS_DATA.technology.bentoImageTitle;
+
+                // Bento Boxes
+                const bento1Title = document.querySelector('#tech-card-1 h3');
+                if (bento1Title) bento1Title.textContent = CMS_DATA.technology.bentoBoxes[0].title;
+                const bento1Desc = document.querySelector('#tech-card-1 p');
+                if (bento1Desc) bento1Desc.textContent = CMS_DATA.technology.bentoBoxes[0].description;
+
+                const bento2Title = document.querySelector('#tech-card-2 h3');
+                if (bento2Title) bento2Title.textContent = CMS_DATA.technology.bentoBoxes[1].title;
+                const bento2Desc = document.querySelector('#tech-card-2 p');
+                if (bento2Desc) bento2Desc.textContent = CMS_DATA.technology.bentoBoxes[1].description;
+
+                const bento3Val = document.querySelector('#tech-card-3 div.text-5xl');
+                if (bento3Val) bento3Val.textContent = CMS_DATA.technology.bentoBoxes[2].value;
+                const bento3Title = document.querySelector('#tech-card-3 h3');
+                if (bento3Title) bento3Title.textContent = CMS_DATA.technology.bentoBoxes[2].title;
+                const bento3Desc = document.querySelector('#tech-card-3 p');
+                if (bento3Desc) bento3Desc.textContent = CMS_DATA.technology.bentoBoxes[2].description;
+
+                // 7. About Me
+                const aboutTag = document.querySelector('#sobre-mi span.tracking-widest');
+                if (aboutTag) aboutTag.textContent = CMS_DATA.aboutMe.tag;
+                const aboutTitle = document.querySelector('#sobre-mi h2');
+                if (aboutTitle) aboutTitle.innerHTML = CMS_DATA.aboutMe.title;
+                const aboutDesc1 = document.querySelector('#sobre-mi p:nth-of-type(1)');
+                if (aboutDesc1) aboutDesc1.textContent = CMS_DATA.aboutMe.paragraphs[0];
+                const aboutDesc2 = document.querySelector('#sobre-mi p:nth-of-type(2)');
+                if (aboutDesc2) aboutDesc2.textContent = CMS_DATA.aboutMe.paragraphs[1];
+
+                const aboutFormTitle = document.getElementById('about-formation-title');
+                if (aboutFormTitle) aboutFormTitle.textContent = CMS_DATA.aboutMe.formation.title;
+                const aboutFormSchool = document.getElementById('about-formation-school');
+                if (aboutFormSchool) aboutFormSchool.textContent = CMS_DATA.aboutMe.formation.school;
+                const aboutFormSub = document.getElementById('about-formation-sub');
+                if (aboutFormSub) aboutFormSub.textContent = CMS_DATA.aboutMe.formation.sub;
+
+                const aboutMembTitle = document.getElementById('about-memberships-title');
+                if (aboutMembTitle) aboutMembTitle.textContent = CMS_DATA.aboutMe.memberships.title;
+                const aboutMembSocieties = document.getElementById('about-memberships-societies');
+                if (aboutMembSocieties) aboutMembSocieties.textContent = CMS_DATA.aboutMe.memberships.societies;
+                const aboutMembSub = document.getElementById('about-memberships-sub');
+                if (aboutMembSub) aboutMembSub.textContent = CMS_DATA.aboutMe.memberships.sub;
+
+                // 8. FAQ Section
+                const faqTag = document.querySelector('#faq span.tracking-widest');
+                if (faqTag) faqTag.textContent = CMS_DATA.faqSection.tag;
+                const faqTitle = document.querySelector('#faq h2');
+                if (faqTitle) faqTitle.innerHTML = CMS_DATA.faqSection.title;
+
+                const faqAccordion = document.getElementById('faq-accordion');
+                if (faqAccordion) {
+                    faqAccordion.innerHTML = CMS_DATA.faqs.map(f => `
+                        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                            <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left"
+                                onclick="toggleFaq(this)">
+                                <span class="text-base font-bold text-primary pr-4"
+                                    style="font-family:'Plus Jakarta Sans',sans-serif;">${f.question}</span>
+                                <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300"
+                                    style="color:#006b58; font-size:22px;">add</span>
+                            </button>
+                            <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+                                <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">${f.answer}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // 9. Testimonials
+                const testTag = document.querySelector('#contacto span.tracking-widest');
+                if (testTag) testTag.textContent = CMS_DATA.testimonialsSection.tag;
+                const testTitle = document.querySelector('#contacto h2');
+                if (testTitle) testTitle.innerHTML = CMS_DATA.testimonialsSection.title;
+
+                const testimonialsTrack = document.getElementById('testimonials-track');
+                if (testimonialsTrack) {
+                    const doubleList = [...CMS_DATA.testimonials, ...CMS_DATA.testimonials];
+                    testimonialsTrack.innerHTML = doubleList.map(t => `
+                        <div class="testimonial-card">
+                            <div class="flex gap-1 mb-3" style="color:#92f5d9;">${'★'.repeat(t.stars)}</div>
+                            <p class="text-white/80 text-sm leading-relaxed mb-4">${t.text}</p>
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
+                                    style="background:${t.initials === 'MT' || t.initials === 'RV' || t.initials === 'JH' ? '#006b58' : '#92f5d9'}; color:${t.initials === 'MT' || t.initials === 'RV' || t.initials === 'JH' ? '#fff' : '#002442'}; font-family:'Plus Jakarta Sans',sans-serif;">
+                                    ${t.initials}</div>
+                                <div>
+                                    <div class="text-white text-xs font-bold"
+                                        style="font-family:'Plus Jakarta Sans',sans-serif;">${t.name}</div>
+                                    <div class="text-xs" style="color:#92f5d9;">${t.role}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // 10. Footer Copyright & Links
+                const footerCopyright = document.querySelector('#contacto footer div.text-xs:last-child');
+                if (footerCopyright) footerCopyright.textContent = CMS_DATA.footer.copyright;
+                const footerLinksContainer = document.querySelector('#contacto footer .flex.gap-6');
+                if (footerLinksContainer) {
+                    footerLinksContainer.innerHTML = CMS_DATA.footer.links.map(l => `
+                        <a class="text-xs font-semibold hover:text-white transition-colors"
+                            style="color:rgba(255,255,255,0.5); font-family:'Plus Jakarta Sans',sans-serif;"
+                            href="${l.href}">${l.text}</a>
+                    `).join('');
+                }
+            }
+            initCMS();
 
             // ─── PARALLAX EFFECT & SCROLL LISTENER ────────────────────────────
             const container = document.getElementById('snap-container');
@@ -1655,91 +1899,8 @@
                 }
             }, { passive: true });
 
-            // ─── SPECIALTIES POPUP MODAL ──────────────────────────────────────
-            const specialtyData = {
-                mano: {
-                    title: "Cirugía de Mano",
-                    icon: "hand_bones",
-                    iconBg: "#103a5f",
-                    iconColor: "#81a4cf",
-                    treatment: "Liberación del túnel carpiano, reparación de tendones y ligamentos, reparación de fracturas complejas en dedos/muñeca, y microcirugía reconstructiva.",
-                    recovery: "Desde 2 semanas para liberación de túnel carpiano hasta 3-6 meses de rehabilitación física guiada para cirugías reconstructivas mayores.",
-                    symptoms: "Hormigueo o entumecimiento recurrente en dedos, dolor punzante en la muñeca, rigidez al despertar y debilidad o pérdida de fuerza para sostener objetos.",
-                    image: "anatomy-hand.png",
-                    caption: "Modelo anatómico 3D de mano y muñeca para planificación de cirugía."
-                },
-                codo: {
-                    title: "Artroscopia de Codo",
-                    icon: "join",
-                    iconBg: "#92f5d9",
-                    iconColor: "#005141",
-                    treatment: "Limpieza y reparación articular mínimamente invasiva (codo de tenista, cuerpos libres óseos, liberación de rigidez articular y desgarros ligamentarios).",
-                    recovery: "Movilidad inmediata. Actividades cotidianas ligeras en 2-3 semanas, y reincorporación a deportes de impacto en 8-12 semanas.",
-                    symptoms: "Dolor persistente en la cara externa del codo, bloqueo o rigidez articular al extender el brazo, y chasquidos con dolor al rotar el antebrazo.",
-                    image: "hero-xray.png",
-                    caption: "Radiografía digital de alta resolución mostrando la articulación del codo."
-                },
-                deporte: {
-                    title: "Lesiones Deportivas",
-                    icon: "sports_gymnastics",
-                    iconBg: "#ffdcbd",
-                    iconColor: "#663e0d",
-                    treatment: "Tratamiento avanzado y reconstructivo para esguinces de muñeca y codo, tendinitis agudas por sobreuso deportivo, e inestabilidad articular post-luxación.",
-                    recovery: "Protocolo de terapia física acelerada. Retorno seguro y progresivo a las canchas/entrenamientos estimado entre 6 semanas y 4 meses.",
-                    symptoms: "Dolor e inflamación aguda tras torcedura, sensación de inestabilidad o de que la articulación 'se sale', y debilidad muscular después del esfuerzo físico.",
-                    image: "doctor-photo.png",
-                    caption: "Consulta especializada para diagnóstico y retorno rápido al rendimiento."
-                },
-                tendones: {
-                    title: "Restauración de Tendones",
-                    icon: "healing",
-                    iconBg: "#ffdcbd",
-                    iconColor: "#663e0d",
-                    treatment: "Cirugías reconstructivas para roturas de tendones flexores y extensores, permitiendo recuperar el movimiento completo.",
-                    recovery: "Protocolo de movilización pasiva temprana guiada, con recuperación funcional completa entre 8 y 12 semanas.",
-                    symptoms: "Incapacidad para doblar o estirar un dedo, dolor en la palma o reverso de la mano tras corte o trauma, e inflamación local.",
-                    image: "anatomy-hand.png",
-                    caption: "Detalle de estructuras tendinosas y tendoplastia en extremidad superior."
-                },
-                reemplazo: {
-                    title: "Reemplazo Articular",
-                    icon: "medical_services",
-                    iconBg: "#103a5f",
-                    iconColor: "#81a4cf",
-                    treatment: "Artroplastia para articulaciones de la mano, nudillos y muñeca afectadas por desgaste articular o artritis severa.",
-                    recovery: "Uso funcional ligero de la mano a las 4-6 semanas. Fuerza y agarre máximo progresivo hasta los 6 meses.",
-                    symptoms: "Dolor articular crónico que no mejora con medicamentos, rigidez severa y deformación progresiva de los nudillos o muñeca.",
-                    image: "hero-xray.png",
-                    caption: "Estudio radiológico pre-operatorio de articulaciones para artroplastia."
-                },
-                nerviosa: {
-                    title: "Liberación Nerviosa",
-                    icon: "bolt",
-                    iconBg: "#92f5d9",
-                    iconColor: "#005141",
-                    treatment: "Descompresión de nervios periféricos en codo y muñeca para eliminar hormigueos y pérdida de sensibilidad.",
-                    recovery: "Alivio inmediato de síntomas de compresión. Cicatrización y recuperación de sensibilidad fina en 2-4 semanas.",
-                    symptoms: "Corrientes eléctricas, hormigueo nocturno en los dedos y pérdida de fuerza para pinzar o sujetar objetos pequeños.",
-                    image: "anatomy-hand.png",
-                    caption: "Modelo anatómico de distribución nerviosa periférica en el brazo."
-                }
-            };
-
-            window.slideModalPanel = function (panelIndex) {
-                const track = document.getElementById('modal-slider-track');
-                const card = document.getElementById('modal-card');
-
-                if (panelIndex === 1) {
-                    card.classList.add('expanded');
-                    track.style.transform = 'translateX(-50%)';
-                } else {
-                    card.classList.remove('expanded');
-                    track.style.transform = 'translateX(0)';
-                }
-            };
-
             window.openSpecialtyModal = function (key) {
-                const data = specialtyData[key];
+                const data = CMS_DATA.specialties[key];
                 if (!data) return;
 
                 const content = `
@@ -1811,6 +1972,18 @@
                 }
             };
 
+            window.slideModalPanel = function (panelIndex) {
+                const track = document.getElementById('modal-slider-track');
+                const card = document.getElementById('modal-card');
+                if (panelIndex === 1) {
+                    card.classList.add('expanded');
+                    track.style.transform = 'translateX(-50%)';
+                } else {
+                    card.classList.remove('expanded');
+                    track.style.transform = 'translateX(0)';
+                }
+            };
+
             // ─── SERVICES GRID TOGGLE ─────────────────────────────────────────
             window.toggleExtraServices = function () {
                 const extra = document.getElementById('extra-services');
@@ -1818,6 +1991,7 @@
                 const text = btn.querySelector('.btn-text');
                 const icon = btn.querySelector('.material-symbols-outlined');
                 const sec = document.getElementById('especialidades');
+                const snapContainer = document.getElementById('snap-container');
 
                 if (extra.style.maxHeight && extra.style.maxHeight !== '0px') {
                     // Collapse
@@ -1828,6 +2002,9 @@
                     icon.style.transform = 'rotate(0deg)';
                     sec.classList.remove('expanded-section');
                     sec.classList.remove('no-snap');
+                    if (snapContainer) {
+                        snapContainer.classList.remove('no-snap-container');
+                    }
                 } else {
                     // Expand
                     extra.classList.remove('opacity-0');
@@ -1837,6 +2014,9 @@
                     icon.style.transform = 'rotate(90deg)';
                     sec.classList.add('expanded-section');
                     sec.classList.add('no-snap');
+                    if (snapContainer) {
+                        snapContainer.classList.add('no-snap-container');
+                    }
                 }
             };
 
