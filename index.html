@@ -232,13 +232,22 @@
 
   /* Specialty card custom hover styles */
   .specialty-card {
+    position: relative;
     cursor: pointer;
+    background: linear-gradient(135deg, #ffffff 0%, #fcfcfe 100%) !important;
+    border: 1px solid rgba(0, 36, 66, 0.05) !important;
+    border-top: 5px solid var(--glow-color) !important;
+    border-radius: 28px !important;
+    box-shadow: 0 10px 30px -15px rgba(0, 36, 66, 0.06) !important;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    overflow: hidden;
   }
   .specialty-card:hover {
-    transform: translateY(-8px) scale(1.01) !important;
-    border-color: rgba(0, 107, 88, 0.25) !important;
-    box-shadow: 0 20px 40px -15px rgba(0, 107, 88, 0.12) !important;
+    transform: translateY(-8px) scale(1.02) !important;
+    border-color: rgba(0, 36, 66, 0.05) !important;
+    border-top-color: var(--glow-color) !important;
+    box-shadow: 0 25px 45px -10px var(--glow-shadow) !important;
+    background: #ffffff !important;
   }
   .specialty-card:hover .material-symbols-outlined {
     transform: scale(1.15) rotate(5deg);
@@ -246,6 +255,50 @@
   }
   .specialty-card .material-symbols-outlined {
     transition: transform 0.3s ease;
+  }
+
+  /* Desktop Snap Scroll offset to prevent fixed navbar overlap */
+  @media (min-width: 768px) {
+    .snap-section {
+      padding-top: 96px;
+    }
+  }
+
+  /* Hero image smooth blend with background gradient */
+  #inicio img {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 15%, rgba(0, 0, 0, 0.8) 50%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.15) 15%, rgba(0, 0, 0, 0.8) 50%, black 100%);
+  }
+
+  /* Modal sliding gallery responsive styling */
+  #modal-card {
+    transition: max-width 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.5s ease, opacity 0.5s ease;
+  }
+  @media (min-width: 768px) {
+    #modal-card.expanded {
+      max-width: 56rem !important; /* max-w-4xl = 896px */
+    }
+    #modal-card.expanded #modal-slider-track {
+      width: 100% !important;
+      transform: none !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 24px !important;
+    }
+    #modal-card.expanded #modal-text-panel {
+      width: 100% !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+      padding-right: 24px !important;
+    }
+    #modal-card.expanded #modal-image-panel {
+      width: 100% !important;
+      padding-left: 12px !important;
+      display: flex !important;
+    }
+    #modal-card.expanded #modal-image-panel button[aria-label="Volver"],
+    #modal-card.expanded #modal-image-panel .back-btn-wrap {
+      display: none !important;
+    }
   }
 
   /* ═══════════════════════════════════════════════════════════
@@ -260,6 +313,7 @@
       height: auto !important;
       min-height: 100svh;
       overflow: visible !important;
+      padding-top: 0 !important; /* No desktop snap offset on mobile */
     }
     
     /* Hero stacked layout on mobile (Doctor visible, text below, no overlap) */
@@ -282,6 +336,8 @@
     }
     #inicio img {
       object-position: center 20% !important;
+      mask-image: linear-gradient(to bottom, black 60%, rgba(0, 0, 0, 0.2) 85%, transparent 100%) !important;
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, rgba(0, 0, 0, 0.2) 85%, transparent 100%) !important;
     }
     #inicio .absolute.inset-0.z-0 div:first-of-type {
       background: linear-gradient(to bottom, rgba(0,21,41,0) 60%, rgba(0,21,41,1) 100%) !important;
@@ -340,10 +396,10 @@
       position: fixed;
       inset: 0;
       z-index: 45;
-      background: rgba(0, 15, 35, 0.85) !important;
-      backdrop-filter: blur(24px) !important;
-      -webkit-backdrop-filter: blur(24px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02) !important;
+      backdrop-filter: blur(45px) !important;
+      -webkit-backdrop-filter: blur(45px) !important;
+      border: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -358,19 +414,21 @@
       clip-path: circle(150% at calc(100% - 36px) 36px);
     }
     #mobile-menu a {
-      color: rgba(255,255,255,0.88);
+      color: #ffffff !important;
+      mix-blend-mode: difference !important;
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 24px;
       font-weight: 700;
       text-decoration: none;
       letter-spacing: -0.01em;
-      transition: color 0.2s;
+      transition: opacity 0.2s;
     }
-    #mobile-menu a:active { color: #92f5d9; }
+    #mobile-menu a:active { opacity: 0.7; }
     #mobile-menu-cta {
       margin-top: 8px;
-      background: #006b58;
-      color: #fff;
+      background: #006b58 !important;
+      color: #fff !important;
+      mix-blend-mode: normal !important; /* keep CTA button normal solid style */
       padding: 14px 36px;
       border-radius: 9999px;
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -528,14 +586,14 @@
           <span class="text-xs font-semibold tracking-widest block mb-3" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">NUESTRAS ESPECIALIDADES</span>
           <h2 class="text-3xl md:text-5xl font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Atención Enfocada en<br>la Extremidad Superior.</h2>
         </div>
-        <button class="flex items-center gap-2 text-primary text-xs font-semibold group" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">
-          VER TODOS LOS SERVICIOS
+        <button id="toggle-services-btn" onclick="toggleExtraServices()" class="flex items-center gap-2 text-primary text-xs font-semibold group" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">
+          <span class="btn-text">VER TODOS LOS SERVICIOS</span>
           <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" style="font-size:18px;">arrow_forward</span>
         </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div onclick="openSpecialtyModal('mano')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.05s;">
+        <div onclick="openSpecialtyModal('mano')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="--glow-color: #81a4cf; --glow-shadow: rgba(16,58,95,0.15); transition-delay:0.05s;">
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#103a5f;">
             <span class="material-symbols-outlined text-2xl" style="color:#81a4cf;">hand_bones</span>
           </div>
@@ -544,7 +602,7 @@
           <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('mano')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
         </div>
 
-        <div onclick="openSpecialtyModal('codo')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.12s;">
+        <div onclick="openSpecialtyModal('codo')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="--glow-color: #92f5d9; --glow-shadow: rgba(0,107,88,0.15); transition-delay:0.12s;">
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#92f5d9;">
             <span class="material-symbols-outlined text-2xl" style="color:#005141;">join</span>
           </div>
@@ -553,13 +611,48 @@
           <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('codo')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
         </div>
 
-        <div onclick="openSpecialtyModal('deporte')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.2s;">
+        <div onclick="openSpecialtyModal('deporte')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="--glow-color: #ffdcbd; --glow-shadow: rgba(102,62,13,0.15); transition-delay:0.2s;">
           <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#ffdcbd;">
             <span class="material-symbols-outlined text-2xl" style="color:#663e0d;">sports_gymnastics</span>
           </div>
           <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Lesiones Deportivas</h3>
           <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Protocolos especializados de recuperación para deportistas, enfocados en un retorno rápido y seguro al rendimiento.</p>
           <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('deporte')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+        </div>
+      </div>
+
+      <!-- Collapsible Extra Services Container -->
+      <div id="extra-services" class="max-h-0 opacity-0 overflow-hidden transition-all duration-700 ease-in-out">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+          <!-- Card 4: Tendones -->
+          <div onclick="openSpecialtyModal('tendones')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px]" style="--glow-color: #ffdcbd; --glow-shadow: rgba(102,62,13,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#ffdcbd;">
+              <span class="material-symbols-outlined text-2xl" style="color:#663e0d;">healing</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Restauración de Tendones</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Cirugías reconstructivas para roturas de tendones flexores y extensores, permitiendo recuperar el movimiento completo.</p>
+            <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('tendones')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+          </div>
+
+          <!-- Card 5: Reemplazo Articular -->
+          <div onclick="openSpecialtyModal('reemplazo')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px]" style="--glow-color: #81a4cf; --glow-shadow: rgba(16,58,95,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#103a5f;">
+              <span class="material-symbols-outlined text-2xl" style="color:#81a4cf;">medical_services</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Reemplazo Articular</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Artroplastia para articulaciones de la mano, nudillos y muñeca afectadas por desgaste articular o artritis severa.</p>
+            <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('reemplazo')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+          </div>
+
+          <!-- Card 6: Liberación Nerviosa -->
+          <div onclick="openSpecialtyModal('nerviosa')" class="specialty-card bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px]" style="--glow-color: #92f5d9; --glow-shadow: rgba(0,107,88,0.15);">
+            <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#92f5d9;">
+              <span class="material-symbols-outlined text-2xl" style="color:#005141;">bolt</span>
+            </div>
+            <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Liberación Nerviosa</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Descompresión de nervios periféricos en codo y muñeca para eliminar hormigueos y pérdida de sensibilidad.</p>
+            <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="javascript:void(0)" onclick="event.stopPropagation(); openSpecialtyModal('nerviosa')">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+          </div>
         </div>
       </div>
     </div>
@@ -666,7 +759,7 @@
             </div>
           </div>
 
-          <a href="javascript:void(0)" onclick="openCalendlyModal()" class="flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm mt-2 squishy-btn decoration-none inline-block w-max" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+          <a href="javascript:void(0)" onclick="openCalendlyModal()" class="hidden md:flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm mt-2 squishy-btn decoration-none w-max" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
             Agendar mi Consulta
             <span class="material-symbols-outlined" style="font-size:17px; display:inline-block; vertical-align:middle;">arrow_forward</span>
           </a>
@@ -878,7 +971,7 @@
       </div>
 
       <!-- CTA inline -->
-      <div class="text-center mt-8 reveal" style="transition-delay:0.2s;">
+      <div class="hidden md:block text-center mt-8 reveal" style="transition-delay:0.2s;">
         <a href="javascript:void(0)" onclick="openCalendlyModal()" class="px-10 py-4 rounded-full font-semibold text-sm squishy-btn decoration-none inline-block" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
           Agendar Consulta Ahora
         </a>
@@ -911,12 +1004,48 @@
 
 <!-- Specialty Modal Overlay -->
 <div id="specialty-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
-  <div class="bg-white rounded-[32px] max-w-lg w-full p-8 shadow-2xl border border-gray-100 transform scale-95 opacity-0 transition-all duration-300 relative">
-    <button onclick="closeSpecialtyModal()" class="absolute top-6 right-6 text-on-surface-variant hover:text-primary transition-colors" aria-label="Cerrar modal">
-      <span class="material-symbols-outlined text-[24px]">close</span>
+  <div id="modal-card" class="bg-white rounded-[32px] max-w-lg w-full p-8 shadow-2xl border border-gray-100 transform scale-95 opacity-0 transition-all duration-500 relative overflow-hidden">
+    
+    <button onclick="closeSpecialtyModal()" class="absolute top-6 right-6 z-10 text-on-surface-variant hover:text-primary transition-colors bg-white/80 backdrop-blur-sm rounded-full p-1.5 shadow-xs" aria-label="Cerrar modal">
+      <span class="material-symbols-outlined text-[22px]">close</span>
     </button>
-    <div id="modal-content-area" class="space-y-6">
-      <!-- Dynamically filled by JS -->
+
+    <!-- Slider Container -->
+    <div class="overflow-hidden w-full relative">
+      <div id="modal-slider-track" class="flex w-[200%] transition-transform duration-500 ease-in-out">
+        
+        <!-- Panel 1: Info (Text) -->
+        <div class="w-1/2 flex-shrink-0 box-border flex flex-col justify-between" id="modal-text-panel">
+          <div id="modal-content-area" class="space-y-6">
+            <!-- Dynamically filled by JS -->
+          </div>
+        </div>
+
+        <!-- Panel 2: Gallery (Images) -->
+        <div class="w-1/2 flex-shrink-0 box-border flex flex-col justify-between" id="modal-image-panel">
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <button onclick="slideModalPanel(0)" class="text-[#006b58] hover:text-[#005141] transition-colors flex items-center p-1 rounded-full hover:bg-gray-100" aria-label="Volver">
+                <span class="material-symbols-outlined text-[24px]">arrow_back</span>
+              </button>
+              <h3 class="text-xl font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">Imágenes Clínicas</h3>
+            </div>
+            
+            <!-- Image viewport -->
+            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-50 border border-gray-100 shadow-inner flex items-center justify-center">
+              <img id="modal-gallery-img" src="" alt="Imagen médica" class="w-full h-full object-cover"/>
+              <div id="modal-gallery-caption" class="absolute bottom-0 left-0 right-0 p-3 bg-primary/95 text-white text-xs text-center backdrop-blur-sm" style="font-family:'Plus Jakarta Sans',sans-serif;"></div>
+            </div>
+          </div>
+          
+          <div class="pt-6 back-btn-wrap">
+            <button onclick="slideModalPanel(0)" class="w-full py-3.5 rounded-full font-bold text-xs text-[#006b58] border border-[#006b58]/30 hover:bg-[#006b58]/5 transition-all active:scale-95" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+              VOLVER A DETALLES
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
@@ -1084,7 +1213,9 @@ document.addEventListener('DOMContentLoaded', () => {
       iconColor: "#81a4cf",
       treatment: "Liberación del túnel carpiano, reparación de tendones y ligamentos, reparación de fracturas complejas en dedos/muñeca, y microcirugía reconstructiva.",
       recovery: "Desde 2 semanas para liberación de túnel carpiano hasta 3-6 meses de rehabilitación física guiada para cirugías reconstructivas mayores.",
-      symptoms: "Hormigueo o entumecimiento recurrente en dedos, dolor punzante en la muñeca, rigidez al despertar y debilidad o pérdida de fuerza para sostener objetos."
+      symptoms: "Hormigueo o entumecimiento recurrente en dedos, dolor punzante en la muñeca, rigidez al despertar y debilidad o pérdida de fuerza para sostener objetos.",
+      image: "anatomy-hand.png",
+      caption: "Modelo anatómico 3D de mano y muñeca para planificación de cirugía."
     },
     codo: {
       title: "Artroscopia de Codo",
@@ -1093,7 +1224,9 @@ document.addEventListener('DOMContentLoaded', () => {
       iconColor: "#005141",
       treatment: "Limpieza y reparación articular mínimamente invasiva (codo de tenista, cuerpos libres óseos, liberación de rigidez articular y desgarros ligamentarios).",
       recovery: "Movilidad inmediata. Actividades cotidianas ligeras en 2-3 semanas, y reincorporación a deportes de impacto en 8-12 semanas.",
-      symptoms: "Dolor persistente en la cara externa del codo, bloqueo o rigidez articular al extender el brazo, y chasquidos con dolor al rotar el antebrazo."
+      symptoms: "Dolor persistente en la cara externa del codo, bloqueo o rigidez articular al extender el brazo, y chasquidos con dolor al rotar el antebrazo.",
+      image: "hero-xray.png",
+      caption: "Radiografía digital de alta resolución mostrando la articulación del codo."
     },
     deporte: {
       title: "Lesiones Deportivas",
@@ -1102,7 +1235,55 @@ document.addEventListener('DOMContentLoaded', () => {
       iconColor: "#663e0d",
       treatment: "Tratamiento avanzado y reconstructivo para esguinces de muñeca y codo, tendinitis agudas por sobreuso deportivo, e inestabilidad articular post-luxación.",
       recovery: "Protocolo de terapia física acelerada. Retorno seguro y progresivo a las canchas/entrenamientos estimado entre 6 semanas y 4 meses.",
-      symptoms: "Dolor e inflamación aguda tras torcedura, sensación de inestabilidad o de que la articulación 'se sale', y debilidad muscular después del esfuerzo físico."
+      symptoms: "Dolor e inflamación aguda tras torcedura, sensación de inestabilidad o de que la articulación 'se sale', y debilidad muscular después del esfuerzo físico.",
+      image: "doctor-photo.png",
+      caption: "Consulta especializada para diagnóstico y retorno rápido al rendimiento."
+    },
+    tendones: {
+      title: "Restauración de Tendones",
+      icon: "healing",
+      iconBg: "#ffdcbd",
+      iconColor: "#663e0d",
+      treatment: "Cirugías reconstructivas para roturas de tendones flexores y extensores, permitiendo recuperar el movimiento completo.",
+      recovery: "Protocolo de movilización pasiva temprana guiada, con recuperación funcional completa entre 8 y 12 semanas.",
+      symptoms: "Incapacidad para doblar o estirar un dedo, dolor en la palma o reverso de la mano tras corte o trauma, e inflamación local.",
+      image: "anatomy-hand.png",
+      caption: "Detalle de estructuras tendinosas y tendoplastia en extremidad superior."
+    },
+    reemplazo: {
+      title: "Reemplazo Articular",
+      icon: "medical_services",
+      iconBg: "#103a5f",
+      iconColor: "#81a4cf",
+      treatment: "Artroplastia para articulaciones de la mano, nudillos y muñeca afectadas por desgaste articular o artritis severa.",
+      recovery: "Uso funcional ligero de la mano a las 4-6 semanas. Fuerza y agarre máximo progresivo hasta los 6 meses.",
+      symptoms: "Dolor articular crónico que no mejora con medicamentos, rigidez severa y deformación progresiva de los nudillos o muñeca.",
+      image: "hero-xray.png",
+      caption: "Estudio radiológico pre-operatorio de articulaciones para artroplastia."
+    },
+    nerviosa: {
+      title: "Liberación Nerviosa",
+      icon: "bolt",
+      iconBg: "#92f5d9",
+      iconColor: "#005141",
+      treatment: "Descompresión de nervios periféricos en codo y muñeca para eliminar hormigueos y pérdida de sensibilidad.",
+      recovery: "Alivio inmediato de síntomas de compresión. Cicatrización y recuperación de sensibilidad fina en 2-4 semanas.",
+      symptoms: "Corrientes eléctricas, hormigueo nocturno en los dedos y pérdida de fuerza para pinzar o sujetar objetos pequeños.",
+      image: "anatomy-hand.png",
+      caption: "Modelo anatómico de distribución nerviosa periférica en el brazo."
+    }
+  };
+
+  window.slideModalPanel = function(panelIndex) {
+    const track = document.getElementById('modal-slider-track');
+    const card = document.getElementById('modal-card');
+    
+    if (panelIndex === 1) {
+      card.classList.add('expanded');
+      track.style.transform = 'translateX(-50%)';
+    } else {
+      card.classList.remove('expanded');
+      track.style.transform = 'translateX(0)';
     }
   };
 
@@ -1136,18 +1317,29 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div class="pt-4">
-        <a href="javascript:void(0)" onclick="closeSpecialtyModal(); openCalendlyModal();" class="flex items-center justify-center gap-2 w-full py-4 rounded-full font-bold text-sm text-white bg-[#006b58] hover:bg-[#005141] transition-all whitespace-nowrap active:scale-95" style="box-shadow: 0 4px 12px rgba(0,107,88,0.2); font-family:'Plus Jakarta Sans',sans-serif;">
-          Agendar Consulta para esta Especialidad
+      <div class="pt-4 flex flex-col gap-2">
+        <button onclick="slideModalPanel(1)" class="flex items-center justify-center gap-2 w-full py-3 rounded-full font-bold text-sm text-[#006b58] border border-[#006b58]/30 hover:bg-[#006b58]/5 transition-all active:scale-95" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+          Ver Imágenes Clínicas
+          <span class="material-symbols-outlined text-[18px]">image</span>
+        </button>
+        <a href="javascript:void(0)" onclick="closeSpecialtyModal(); openCalendlyModal();" class="flex items-center justify-center gap-2 w-full py-3.5 rounded-full font-bold text-sm text-white bg-[#006b58] hover:bg-[#005141] transition-all whitespace-nowrap active:scale-95" style="box-shadow: 0 4px 12px rgba(0,107,88,0.2); font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+          Agendar Consulta
           <span class="material-symbols-outlined text-[18px]">calendar_today</span>
         </a>
       </div>
     `;
 
-    const modal = document.getElementById('specialty-modal');
-    const card = modal.querySelector('div');
-    
     document.getElementById('modal-content-area').innerHTML = content;
+    
+    // Set image and caption
+    document.getElementById('modal-gallery-img').src = data.image;
+    document.getElementById('modal-gallery-caption').textContent = data.caption;
+    
+    // Reset to first slide before showing
+    slideModalPanel(0);
+
+    const modal = document.getElementById('specialty-modal');
+    const card = document.getElementById('modal-card');
     
     modal.classList.remove('opacity-0', 'pointer-events-none');
     card.classList.remove('scale-95', 'opacity-0');
@@ -1157,13 +1349,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.closeSpecialtyModal = function() {
     const modal = document.getElementById('specialty-modal');
-    const card = modal.querySelector('div');
+    const card = document.getElementById('modal-card');
     
     card.classList.add('scale-95', 'opacity-0');
     modal.classList.add('opacity-0', 'pointer-events-none');
+    
     // Restore scrolling only if mobile menu is not open
     if (!document.getElementById('mobile-menu').classList.contains('open')) {
       document.body.style.overflow = '';
+    }
+  };
+
+  // ─── SERVICES GRID TOGGLE ─────────────────────────────────────────
+  window.toggleExtraServices = function() {
+    const extra = document.getElementById('extra-services');
+    const btn = document.getElementById('toggle-services-btn');
+    const text = btn.querySelector('.btn-text');
+    const icon = btn.querySelector('.material-symbols-outlined');
+    
+    if (extra.style.maxHeight && extra.style.maxHeight !== '0px') {
+      // Collapse
+      extra.style.maxHeight = '0px';
+      extra.classList.remove('opacity-100');
+      extra.classList.add('opacity-0');
+      text.textContent = 'VER TODOS LOS SERVICIOS';
+      icon.style.transform = 'rotate(0deg)';
+    } else {
+      // Expand
+      extra.classList.remove('opacity-0');
+      extra.classList.add('opacity-100');
+      extra.style.maxHeight = extra.scrollHeight + 'px';
+      text.textContent = 'OCULTAR SERVICIOS';
+      icon.style.transform = 'rotate(90deg)';
     }
   };
 
