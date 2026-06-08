@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dr. Daniel Gómez | Cirujano Ortopédico</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-secondary": "#ffffff","on-secondary-fixed": "#002019","tertiary": "#361c00",
+          "surface-bright": "#f9f9fc","background": "#f9f9fc","on-surface-variant": "#42474e",
+          "on-primary-fixed-variant": "#23496f","outline-variant": "#c3c7cf","on-primary-container": "#81a4cf",
+          "on-tertiary-fixed": "#2c1600","inverse-surface": "#2f3033","inverse-primary": "#a6c9f6",
+          "secondary-fixed": "#92f5d9","primary-fixed": "#d1e4ff","on-secondary-container": "#00725d",
+          "on-tertiary-container": "#cd965e","on-primary": "#ffffff","primary": "#002442",
+          "on-primary-fixed": "#001d36","surface-dim": "#dadadd","outline": "#73777f",
+          "tertiary-container": "#542f00","surface": "#f9f9fc","tertiary-fixed": "#ffdcbd",
+          "surface-variant": "#e2e2e6","primary-fixed-dim": "#a6c9f6","inverse-on-surface": "#f1f0f4",
+          "on-tertiary": "#ffffff","on-error": "#ffffff","secondary-fixed-dim": "#76d8bd",
+          "secondary": "#006b58","surface-container-low": "#f4f3f7","on-error-container": "#93000a",
+          "surface-container-highest": "#e2e2e6","surface-tint": "#3d6188","tertiary-fixed-dim": "#f6bb80",
+          "surface-container-high": "#e8e8eb","surface-container": "#eeedf1","error-container": "#ffdad6",
+          "on-secondary-fixed-variant": "#005141","primary-container": "#103a5f",
+          "surface-container-lowest": "#ffffff","secondary-container": "#92f5d9",
+          "on-tertiary-fixed-variant": "#663e0d","on-surface": "#1a1c1e","error": "#ba1a1a",
+          "on-background": "#1a1c1e"
+        },
+        borderRadius: { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+        spacing: { "gutter": "24px","unit": "8px","margin-desktop": "64px","margin-mobile": "16px","bento-gap": "16px" },
+        fontFamily: {
+          "body-lg": ["Work Sans"],"display-lg": ["Plus Jakarta Sans"],"body-md": ["Work Sans"],
+          "label-sm": ["Plus Jakarta Sans"],"display-lg-mobile": ["Plus Jakarta Sans"],"headline-md": ["Plus Jakarta Sans"]
+        },
+        fontSize: {
+          "body-lg": ["18px",{"lineHeight":"1.6","fontWeight":"400"}],
+          "display-lg": ["48px",{"lineHeight":"1.1","letterSpacing":"-0.02em","fontWeight":"700"}],
+          "body-md": ["16px",{"lineHeight":"1.5","fontWeight":"400"}],
+          "label-sm": ["13px",{"lineHeight":"1","letterSpacing":"0.05em","fontWeight":"600"}],
+          "display-lg-mobile": ["32px",{"lineHeight":"1.2","fontWeight":"700"}],
+          "headline-md": ["24px",{"lineHeight":"1.3","fontWeight":"600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Work Sans', sans-serif;
+  }
+
+  /* ── Snap Container ── */
+  #snap-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+  }
+
+  .snap-section {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Material icons ── */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  }
+
+  /* ── Navbar adaptive ── */
+  #main-nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+    max-width: 80rem;
+    z-index: 50;
+    border-radius: 9999px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 32px;
+    transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+    border: 1px solid transparent;
+  }
+
+  /* On dark sections */
+  #main-nav.nav-dark {
+    background: rgba(0, 20, 42, 0.35);
+    border-color: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  }
+  #main-nav.nav-dark .nav-logo { color: #ffffff; }
+  #main-nav.nav-dark .nav-link { color: rgba(255,255,255,0.75); }
+  #main-nav.nav-dark .nav-link:hover { color: #ffffff; }
+  #main-nav.nav-dark .nav-link.active { color: #ffffff; border-bottom-color: #92f5d9; }
+  #main-nav.nav-dark .nav-btn {
+    background: rgba(255,255,255,0.15);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  #main-nav.nav-dark .nav-btn:hover { background: rgba(255,255,255,0.25); }
+
+  /* On light sections */
+  #main-nav.nav-light {
+    background: rgba(255,255,255,0.75);
+    border-color: rgba(0,0,0,0.08);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 20px rgba(0,36,66,0.08);
+  }
+  #main-nav.nav-light .nav-logo { color: #002442; }
+  #main-nav.nav-light .nav-link { color: #42474e; }
+  #main-nav.nav-light .nav-link:hover { color: #002442; }
+  #main-nav.nav-light .nav-link.active { color: #006b58; border-bottom-color: #006b58; }
+  #main-nav.nav-light .nav-btn {
+    background: #006b58;
+    color: #ffffff;
+    border: none;
+  }
+  #main-nav.nav-light .nav-btn:hover { background: #005141; }
+
+  .nav-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    transition: color 0.4s;
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+
+  .nav-link {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 2px;
+    transition: color 0.4s, border-color 0.4s;
+  }
+
+  .nav-btn {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 10px 24px;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  /* ── Squishy button ── */
+  .squishy-btn {
+    transition: all 0.2s cubic-bezier(0.175,0.885,0.32,1.275);
+    box-shadow: 0 4px 0 0 #005141;
+  }
+  .squishy-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 0 #005141; }
+
+  /* ── Glass panel ── */
+  .glass-panel {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* ── Bento card ── */
+  .bento-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .bento-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(0,36,66,0.12); }
+
+  /* ── Testimonials carousel ── */
+  .carousel-outer {
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+  .carousel-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    animation: marquee 45s linear infinite;
+  }
+  .carousel-track:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .testimonial-card {
+    flex-shrink: 0;
+    width: 320px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 28px;
+    backdrop-filter: blur(10px);
+  }
+
+  /* ── Scroll indicator bounce ── */
+  .scroll-indicator { animation: bounce 2s infinite; }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── Section reveal animations ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.165,0.84,0.44,1), transform 0.7s cubic-bezier(0.165,0.84,0.44,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
+<nav id="main-nav" class="nav-dark">
+  <div class="nav-logo">Dr. Daniel Gómez</div>
+  <div class="nav-links hidden md:flex">
+    <a class="nav-link active" href="#inicio">Inicio</a>
+    <a class="nav-link" href="#especialidades">Especialidades</a>
+    <a class="nav-link" href="#tecnologia">Tecnología</a>
+    <a class="nav-link" href="#sobre-mi">Sobre Mí</a>
+    <a class="nav-link" href="#contacto">Contacto</a>
+  </div>
+  <button class="nav-btn">Agendar Consulta</button>
+</nav>
+
+<!-- ═══════════════════════════ SNAP CONTAINER ═══════════════════════════ -->
+<div id="snap-container">
+
+  <!-- ── 1. HERO ── -->
+  <section class="snap-section" id="inicio" data-theme="dark">
+    <div class="absolute inset-0 z-0">
+      <img src="hero-doctor.png" alt="Dr. Daniel Gómez en su consultorio" class="w-full h-full object-cover" style="object-position: center center;"/>
+      <!-- Gradiente fuerte en zona de texto (izquierda), suave en el resto -->
+      <div class="absolute inset-0" style="background: linear-gradient(to right, rgba(0,15,35,0.93) 0%, rgba(0,20,45,0.82) 35%, rgba(0,20,45,0.45) 65%, rgba(0,10,25,0.15) 100%);"></div>
+      <!-- Gradiente adicional vertical para el indicador de scroll -->
+      <div class="absolute bottom-0 left-0 right-0 h-32" style="background: linear-gradient(to top, rgba(0,10,25,0.5), transparent);"></div>
+    </div>
+
+    <div class="relative z-10 h-full flex flex-col justify-center px-16 max-w-7xl mx-auto">
+      <div class="max-w-2xl text-white space-y-6 reveal">
+        <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest" style="background:rgba(146,245,217,0.2); color:#92f5d9; border:1px solid rgba(146,245,217,0.3); font-family:'Plus Jakarta Sans',sans-serif;">Cirujano Ortopédico Certificado</span>
+        <h1 class="text-5xl font-bold leading-tight" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Precisión en<br>Cada Movimiento.</h1>
+        <p class="text-lg text-white/85 max-w-lg leading-relaxed">Soluciones quirúrgicas avanzadas especializadas en mano, codo y restauración de extremidad superior con tecnología de clase mundial.</p>
+        <div class="flex items-center gap-6 pt-2">
+          <button class="flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm squishy-btn" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+            Agendar Cita
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+          </button>
+          <div class="flex items-center gap-3 cursor-pointer group">
+            <div class="w-11 h-11 rounded-full border-2 border-white/40 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+              <span class="material-symbols-outlined text-white" style="font-size:20px;">play_arrow</span>
+            </div>
+            <span class="text-sm font-semibold text-white/80" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.05em;">Ver Metodología</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator absolute bottom-8 left-1/2 flex flex-col items-center gap-2 z-20" style="transform:translateX(-50%);">
+      <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; color:rgba(255,255,255,0.5); text-transform:uppercase;">Deslizar</span>
+      <span class="material-symbols-outlined" style="color:rgba(255,255,255,0.4); font-size:18px;">keyboard_arrow_down</span>
+    </div>
+  </section>
+
+  <!-- ── 2. MÉTRICAS ── -->
+  <section class="snap-section flex items-center" id="metricas" data-theme="light">
+    <div class="w-full px-16 max-w-7xl mx-auto">
+      <div class="bg-white rounded-[36px] p-12 shadow-xl shadow-primary/5 border border-gray-100 mb-14 reveal">
+        <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+          <div class="text-center px-8 py-4">
+            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">98%</div>
+            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">SATISFACCIÓN</div>
+          </div>
+          <div class="text-center px-8 py-4">
+            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">2k+</div>
+            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">PACIENTES</div>
+          </div>
+          <div class="text-center px-8 py-4">
+            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">15+</div>
+            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">AÑOS DE EXP.</div>
+          </div>
+          <div class="text-center px-8 py-4">
+            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">4.9★</div>
+            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">CALIFICACIÓN</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center reveal" style="transition-delay:0.15s;">
+        <h2 class="text-5xl font-bold text-primary mb-4" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Resultados que Hablan por Sí Solos.</h2>
+        <p class="text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">Más de una década de excelencia quirúrgica respaldada por datos reales y pacientes satisfechos en toda la región.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. ESPECIALIDADES ── -->
+  <section class="snap-section flex items-center" id="especialidades" data-theme="light" style="background:#f4f3f7;">
+    <div class="w-full px-16 max-w-7xl mx-auto py-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 reveal">
+        <div>
+          <span class="text-xs font-semibold tracking-widest block mb-3" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">NUESTRAS ESPECIALIDADES</span>
+          <h2 class="text-5xl font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Atención Enfocada en<br>la Extremidad Superior.</h2>
+        </div>
+        <button class="flex items-center gap-2 text-primary text-xs font-semibold group" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">
+          VER TODOS LOS SERVICIOS
+          <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" style="font-size:18px;">arrow_forward</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.05s;">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#103a5f;">
+            <span class="material-symbols-outlined text-2xl" style="color:#81a4cf;">hand_bones</span>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Cirugía de Mano</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Desde liberación del túnel carpiano hasta reconstrucción compleja de fracturas y reparación microquirúrgica.</p>
+          <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="#">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+        </div>
+
+        <div class="bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.12s;">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#92f5d9;">
+            <span class="material-symbols-outlined text-2xl" style="color:#005141;">join</span>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Artroscopia de Codo</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Exploración y reparación articular mínimamente invasiva para codo de tenista, artritis y desgarros de ligamentos.</p>
+          <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="#">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+        </div>
+
+        <div class="bento-card bg-white p-9 rounded-[28px] border border-gray-100 flex flex-col h-[300px] reveal" style="transition-delay:0.2s;">
+          <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background:#ffdcbd;">
+            <span class="material-symbols-outlined text-2xl" style="color:#663e0d;">sports_gymnastics</span>
+          </div>
+          <h3 class="text-xl font-bold text-primary mb-3" style="font-family:'Plus Jakarta Sans',sans-serif;">Lesiones Deportivas</h3>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-auto">Protocolos especializados de recuperación para deportistas, enfocados en un retorno rápido y seguro al rendimiento.</p>
+          <a class="text-xs font-bold flex items-center gap-1 mt-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;" href="#">SABER MÁS <span class="material-symbols-outlined" style="font-size:14px;">north_east</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4. TECNOLOGÍA ── -->
+  <section class="snap-section flex items-center" id="tecnologia" data-theme="light">
+    <div class="w-full px-16 max-w-7xl mx-auto py-8">
+      <div class="grid grid-cols-12 gap-4" style="max-height: calc(100vh - 120px);">
+        <div class="col-span-12 md:col-span-7 rounded-[32px] p-10 flex flex-col justify-center reveal" style="background:#eeedf1;">
+          <span class="text-xs font-semibold tracking-widest block mb-4" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">INNOVACIÓN TECNOLÓGICA</span>
+          <h2 class="text-5xl font-bold text-primary mb-5" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Innovación en<br>Cada Incisión.</h2>
+          <p class="text-lg text-on-surface-variant leading-relaxed max-w-md">Imágenes 3D de última generación y procedimientos asistidos por robótica para garantizar el mínimo tiempo de recuperación y la máxima precisión.</p>
+        </div>
+
+        <div class="col-span-12 md:col-span-5 rounded-[32px] overflow-hidden relative group reveal" style="height:240px; transition-delay:0.1s; background:#001529;">
+          <img src="anatomy-hand.png" alt="Modelo 3D Anatómico" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" style="mix-blend-mode:luminosity; opacity:0.9;"/>
+          <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,21,41,0.85) 0%, transparent 60%);"></div>
+          <div class="absolute bottom-5 left-5">
+            <div class="text-xs font-semibold mb-1" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.1em; color:#92f5d9;">MODELO_V4.2</div>
+            <div class="text-base font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Precisión Anatómica</div>
+          </div>
+        </div>
+
+        <div class="col-span-12 md:col-span-4 text-white rounded-[32px] p-8 flex flex-col justify-between reveal" style="background:#002442; transition-delay:0.05s;">
+          <span class="material-symbols-outlined text-3xl" style="color:#92f5d9;">precision_manufacturing</span>
+          <div>
+            <h3 class="text-xl font-bold mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Microcirugía</h3>
+            <p class="text-sm leading-relaxed" style="color:#d1e4ff; opacity:0.85;">Técnicas especializadas para reparación de nervios y vasos con precisión microscópica.</p>
+          </div>
+        </div>
+
+        <div class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between reveal" style="background:#e8e8eb; transition-delay:0.12s;">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="flex -space-x-3">
+              <div class="w-9 h-9 rounded-full border-2 border-white" style="background:#dadadd;"></div>
+              <div class="w-9 h-9 rounded-full border-2 border-white" style="background:#e2e2e6;"></div>
+              <div class="w-9 h-9 rounded-full border-2 border-white" style="background:#c3c7cf;"></div>
+            </div>
+            <span class="text-xs font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">+1,200 Reseñas</span>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Experto de Confianza</h3>
+            <p class="text-sm text-on-surface-variant leading-relaxed">Elegido Mejor Ortopedista por 5 años consecutivos en la revista médica regional.</p>
+          </div>
+        </div>
+
+        <div class="col-span-12 md:col-span-4 rounded-[32px] p-8 flex flex-col justify-between overflow-hidden relative reveal" style="background:#006b58; color:#fff; transition-delay:0.18s;">
+          <div class="relative z-10">
+            <div class="text-5xl font-bold mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">24h</div>
+            <h3 class="text-xl font-bold mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">Respuesta Rápida</h3>
+            <p class="text-sm leading-relaxed" style="color:#92f5d9;">Consultas de emergencia por lesiones deportivas programadas en un día hábil.</p>
+          </div>
+          <div class="absolute -right-8 -bottom-8 w-28 h-28 rounded-full blur-2xl" style="background:rgba(255,255,255,0.12);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. SOBRE MÍ ── -->
+  <section class="snap-section flex items-center" id="sobre-mi" data-theme="light" style="background:#ffffff;">
+    <div class="w-full px-16 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Foto del doctor -->
+        <div class="relative reveal">
+          <div class="relative rounded-[40px] overflow-hidden shadow-2xl shadow-primary/15" style="height:600px;">
+            <img src="doctor-photo.png" alt="Dr. Daniel Gómez" class="w-full h-full object-cover" style="object-position: center 5%;"/>
+            <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,36,66,0.35) 0%, transparent 60%);"></div>
+          </div>
+          <!-- Badge flotante -->
+          <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl p-5 shadow-xl shadow-primary/10 border border-gray-100">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:#006b58;">
+                <span class="material-symbols-outlined text-white" style="font-size:18px;">verified</span>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">Certificado</div>
+                <div class="text-xs text-on-surface-variant">Consejo Mexicano de Ortopedia</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texto biográfico -->
+        <div class="space-y-6 reveal" style="transition-delay:0.15s;">
+          <span class="text-xs font-bold tracking-widest uppercase" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">Sobre Mí</span>
+          <h2 class="text-5xl font-bold text-primary leading-tight" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Soy Daniel,<br>tu cirujano<br>de confianza.</h2>
+
+          <p class="text-base text-on-surface-variant leading-relaxed">Desde que era estudiante de medicina, supe que quería devolverle a la gente algo tan simple —y tan profundo— como mover sus manos sin dolor. Hoy, después de más de 15 años dedicados a la cirugía ortopédica, esa motivación sigue siendo la misma.</p>
+
+          <p class="text-base text-on-surface-variant leading-relaxed">Me especializo en mano, codo y extremidad superior, pero lo que más me importa es la persona que entra a mi consultorio. Escuchar tu historia, entender tu rutina y diseñar un plan que realmente funcione para ti —eso es lo que me hace levantarme cada mañana.</p>
+
+          <div class="grid grid-cols-2 gap-4 pt-2">
+            <div class="rounded-2xl p-5" style="background:#f4f3f7;">
+              <div class="text-xs font-bold text-on-surface-variant mb-1" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">FORMACIÓN</div>
+              <div class="text-sm font-semibold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">UNAM · Hospital de Ortopedia</div>
+              <div class="text-xs text-on-surface-variant mt-1">Fellowship en Microcirugía — EUA</div>
+            </div>
+            <div class="rounded-2xl p-5" style="background:#f4f3f7;">
+              <div class="text-xs font-bold text-on-surface-variant mb-1" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.06em;">MEMBRESÍAS</div>
+              <div class="text-sm font-semibold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">AMCIO · ASSH · IFSSH</div>
+              <div class="text-xs text-on-surface-variant mt-1">Sociedades internacionales de mano</div>
+            </div>
+          </div>
+
+          <button class="flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-sm mt-2 squishy-btn" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+            Agendar mi Consulta
+            <span class="material-symbols-outlined" style="font-size:17px;">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6. FAQ ── -->
+  <section class="snap-section flex items-center" id="faq" data-theme="light" style="background:#f9f9fc;">
+    <div class="w-full px-16 max-w-5xl mx-auto">
+      <div class="text-center mb-10 reveal">
+        <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">PREGUNTAS FRECUENTES</span>
+        <h2 class="text-5xl font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Todo lo que necesitas saber.</h2>
+      </div>
+
+      <div class="space-y-3 reveal" style="transition-delay:0.15s;">
+
+        <!-- FAQ 1 -->
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
+            <span class="text-base font-bold text-primary pr-4" style="font-family:'Plus Jakarta Sans',sans-serif;">¿Cuánto tarda la recuperación de una cirugía de mano?</span>
+            <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300" style="color:#006b58; font-size:22px;">add</span>
+          </button>
+          <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">Depende del tipo de cirugía. Una liberación del túnel carpiano puede permitirte retomar actividades ligeras en 1–2 semanas. Una reconstrucción de fractura o microcirugía puede requerir entre 2 y 6 meses de rehabilitación progresiva. Siempre diseñamos un protocolo personalizado según tu caso y estilo de vida.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
+            <span class="text-base font-bold text-primary pr-4" style="font-family:'Plus Jakarta Sans',sans-serif;">¿Es necesario operar el codo de tenista o se puede tratar sin cirugía?</span>
+            <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300" style="color:#006b58; font-size:22px;">add</span>
+          </button>
+          <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">En la gran mayoría de los casos —más del 90%— el codo de tenista responde muy bien al tratamiento conservador: fisioterapia, infiltraciones y reposo. La cirugía artroscópica solo se considera cuando los síntomas persisten por más de 6–12 meses sin mejoría. Mi objetivo siempre es explorar primero las opciones menos invasivas.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
+            <span class="text-base font-bold text-primary pr-4" style="font-family:'Plus Jakarta Sans',sans-serif;">¿La cirugía artroscópica deja cicatriz visible?</span>
+            <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300" style="color:#006b58; font-size:22px;">add</span>
+          </button>
+          <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">La artroscopia utiliza incisiones muy pequeñas (3–5 mm), lo que minimiza enormemente las cicatrices. Con el tiempo y un buen cuidado postoperatorio, estas marcas se vuelven prácticamente imperceptibles. Es una de las grandes ventajas de los procedimientos mínimamente invasivos frente a la cirugía abierta tradicional.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
+            <span class="text-base font-bold text-primary pr-4" style="font-family:'Plus Jakarta Sans',sans-serif;">¿Cuándo debo consultar a un cirujano de mano y no solo a un médico general?</span>
+            <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300" style="color:#006b58; font-size:22px;">add</span>
+          </button>
+          <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">Debes consultar a un especialista si experimentas dolor persistente por más de 3 semanas, pérdida de fuerza o sensibilidad, entumecimiento en dedos o muñeca, deformidad visible tras una lesión, o dificultad para realizar actividades cotidianas como agarrar objetos o escribir. Cuanto antes se diagnostica el problema, mejores son los resultados.</p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+          <button class="faq-btn w-full flex items-center justify-between px-7 py-5 text-left" onclick="toggleFaq(this)">
+            <span class="text-base font-bold text-primary pr-4" style="font-family:'Plus Jakarta Sans',sans-serif;">¿Puedo retomar el deporte después de una lesión de ligamentos en la muñeca?</span>
+            <span class="faq-icon material-symbols-outlined flex-shrink-0 transition-transform duration-300" style="color:#006b58; font-size:22px;">add</span>
+          </button>
+          <div class="faq-answer" style="max-height:0; overflow:hidden; transition:max-height 0.4s ease;">
+            <p class="px-7 pb-5 text-sm text-on-surface-variant leading-relaxed">Sí, en la mayoría de los casos es posible volver al deporte con una recuperación adecuada. El tiempo varía entre 6 semanas y 6 meses según la gravedad. El protocolo incluye inmovilización inicial, fisioterapia de fortalecimiento y reintroducción progresiva al entrenamiento. Trabajamos en equipo con fisioterapeutas especializados en deporte para que tu regreso sea seguro y sostenible.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 7. TESTIMONIOS + FOOTER (merged, dark) ── -->
+  <section class="snap-section flex flex-col justify-between" id="contacto" data-theme="dark" style="background:#002442; overflow:hidden;">
+
+    <!-- Testimonios -->
+    <div class="flex-1 flex flex-col justify-center pt-16 px-16 max-w-7xl mx-auto w-full">
+      <div class="text-center mb-10 reveal">
+        <span class="text-xs font-bold tracking-widest uppercase mb-3 block" style="color:#92f5d9; font-family:'Plus Jakarta Sans',sans-serif;">TESTIMONIOS</span>
+        <h2 class="text-4xl font-bold text-white leading-tight" style="font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:-0.02em;">Lo que dicen mis pacientes.</h2>
+      </div>
+
+      <!-- Carrusel infinito -->
+      <div class="carousel-outer reveal" style="transition-delay:0.15s;">
+        <div class="carousel-track">
+          <!-- Set 1 -->
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"El Dr. Gómez realizó mi reconstrucción de codo después de un accidente. Su precisión y el plan de rehabilitación me permitieron volver a las competencias en solo seis meses. ¡Increíble!"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">MT</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Marcos Torres</div>
+                <div class="text-xs" style="color:#92f5d9;">Atleta Profesional</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Llegué con mucho miedo a la cirugía de mano. El doctor me explicó todo con calma y paciencia. Ahora puedo tocar el piano nuevamente. Le estoy eternamente agradecida."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#92f5d9; color:#002442; font-family:'Plus Jakarta Sans',sans-serif;">LC</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Laura Castillo</div>
+                <div class="text-xs" style="color:#92f5d9;">Pianista</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Tres meses después de la cirugía ya estoy de vuelta en la cancha. El seguimiento post-operatorio fue impecable, siempre disponible para resolver mis dudas."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">RV</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Roberto Vargas</div>
+                <div class="text-xs" style="color:#92f5d9;">Tenista Amateur</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Lo que más valoro es su honestidad. Me dijo exactamente qué esperar, sin falsas promesas. El resultado superó mis expectativas. Volvería a operarme con él sin dudarlo."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#92f5d9; color:#002442; font-family:'Plus Jakarta Sans',sans-serif;">AM</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Ana Medrano</div>
+                <div class="text-xs" style="color:#92f5d9;">Ejecutiva</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Sufrí una fractura grave en el trabajo. El Dr. Gómez me atendió rápido y el resultado fue excelente. Mi mano funciona al 100% y pude reintegrarme sin problema."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">JH</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Jorge Hernández</div>
+                <div class="text-xs" style="color:#92f5d9;">Carpintero</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Duplicado para loop infinito -->
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"El Dr. Gómez realizó mi reconstrucción de codo después de un accidente. Su precisión y el plan de rehabilitación me permitieron volver a las competencias en solo seis meses. ¡Increíble!"</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">MT</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Marcos Torres</div>
+                <div class="text-xs" style="color:#92f5d9;">Atleta Profesional</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Llegué con mucho miedo a la cirugía de mano. El doctor me explicó todo con calma y paciencia. Ahora puedo tocar el piano nuevamente. Le estoy eternamente agradecida."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#92f5d9; color:#002442; font-family:'Plus Jakarta Sans',sans-serif;">LC</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Laura Castillo</div>
+                <div class="text-xs" style="color:#92f5d9;">Pianista</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Tres meses después de la cirugía ya estoy de vuelta en la cancha. El seguimiento post-operatorio fue impecable, siempre disponible para resolver mis dudas."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">RV</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Roberto Vargas</div>
+                <div class="text-xs" style="color:#92f5d9;">Tenista Amateur</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Lo que más valoro es su honestidad. Me dijo exactamente qué esperar, sin falsas promesas. El resultado superó mis expectativas. Volvería a operarme con él sin dudarlo."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#92f5d9; color:#002442; font-family:'Plus Jakarta Sans',sans-serif;">AM</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Ana Medrano</div>
+                <div class="text-xs" style="color:#92f5d9;">Ejecutiva</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="flex gap-1 mb-3" style="color:#92f5d9;">★★★★★</div>
+            <p class="text-white/80 text-sm leading-relaxed mb-4">"Sufrí una fractura grave en el trabajo. El Dr. Gómez me atendió rápido y el resultado fue excelente. Mi mano funciona al 100% y pude reintegrarme sin problema."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif;">JH</div>
+              <div>
+                <div class="text-white text-xs font-bold" style="font-family:'Plus Jakarta Sans',sans-serif;">Jorge Hernández</div>
+                <div class="text-xs" style="color:#92f5d9;">Carpintero</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA inline -->
+      <div class="text-center mt-8 reveal" style="transition-delay:0.2s;">
+        <button class="px-10 py-4 rounded-full font-semibold text-sm squishy-btn" style="background:#006b58; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; letter-spacing:0.04em;">
+          Agendar Consulta Ahora
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t px-16 py-6" style="border-color:rgba(255,255,255,0.1);">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 max-w-7xl mx-auto">
+        <div class="text-lg font-bold text-white" style="font-family:'Plus Jakarta Sans',sans-serif;">Dr. Daniel Gómez</div>
+        <div class="flex gap-6">
+          <a class="text-xs font-semibold hover:text-white transition-colors" style="color:rgba(255,255,255,0.5); font-family:'Plus Jakarta Sans',sans-serif;" href="#">Política de Privacidad</a>
+          <a class="text-xs font-semibold hover:text-white transition-colors" style="color:rgba(255,255,255,0.5); font-family:'Plus Jakarta Sans',sans-serif;" href="#">Términos de Servicio</a>
+          <a class="text-xs font-semibold hover:text-white transition-colors" style="color:rgba(255,255,255,0.5); font-family:'Plus Jakarta Sans',sans-serif;" href="#">Certificaciones</a>
+        </div>
+        <div class="text-xs" style="color:rgba(255,255,255,0.4);">© 2024 Dr. Daniel Gómez · Cirugía Ortopédica</div>
+      </div>
+    </footer>
+  </section>
+
+</div><!-- /#snap-container -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  // ─── JS SNAP SCROLL ───────────────────────────────────────────────
+  const container = document.getElementById('snap-container');
+  const sections  = Array.from(document.querySelectorAll('.snap-section'));
+  let snapTimer   = null;
+  let isSnapping  = false;
+
+  function getNearestSection() {
+    const scrollTop = container.scrollTop;
+    const vh = container.clientHeight;
+    let best = null, bestDist = Infinity;
+
+    sections.forEach(sec => {
+      const dist = Math.abs(sec.offsetTop - scrollTop);
+      if (dist < bestDist) { bestDist = dist; best = sec; }
+    });
+
+    // Only snap if we're within 45% of the viewport height of a boundary
+    return (bestDist < vh * 0.45) ? best : null;
+  }
+
+  function doSnap() {
+    if (isSnapping) return;
+    const target = getNearestSection();
+    if (!target) return;
+
+    isSnapping = true;
+    container.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+    setTimeout(() => { isSnapping = false; }, 700);
+  }
+
+  container.addEventListener('scroll', () => {
+    clearTimeout(snapTimer);
+    snapTimer = setTimeout(doSnap, 200);
+  }, { passive: true });
+
+  // ─── ADAPTIVE NAVBAR ──────────────────────────────────────────────
+  const nav = document.getElementById('main-nav');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        const theme = entry.target.getAttribute('data-theme') || 'light';
+        if (theme === 'dark') {
+          nav.classList.add('nav-dark');
+          nav.classList.remove('nav-light');
+        } else {
+          nav.classList.add('nav-light');
+          nav.classList.remove('nav-dark');
+        }
+        // Update active nav link
+        const id = entry.target.id;
+        document.querySelectorAll('.nav-link').forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { root: container, threshold: 0.5 });
+
+  sections.forEach(s => navObserver.observe(s));
+
+  // ─── NAV LINK SCROLL ──────────────────────────────────────────────
+  document.querySelectorAll('.nav-link, .nav-btn').forEach(el => {
+    const href = el.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        isSnapping = true;
+        container.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+        setTimeout(() => { isSnapping = false; }, 800);
+      }
+    });
+  });
+
+  // ─── SCROLL REVEAL ────────────────────────────────────────────────
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { root: container, threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ─── FAQ ACCORDION ─────────────────────────────────────────────
+  window.toggleFaq = function(btn) {
+    const answer  = btn.nextElementSibling;   // .faq-answer
+    const icon    = btn.querySelector('.faq-icon');
+    const isOpen  = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+    // Cierra todos los otros
+    document.querySelectorAll('.faq-answer').forEach(a => {
+      a.style.maxHeight = '0px';
+    });
+    document.querySelectorAll('.faq-icon').forEach(i => {
+      i.textContent = 'add';
+      i.style.transform = 'rotate(0deg)';
+    });
+    document.querySelectorAll('.faq-btn').forEach(b => {
+      b.style.borderBottomLeftRadius  = '';
+      b.style.borderBottomRightRadius = '';
+    });
+
+    // Abre este si estaba cerrado
+    if (!isOpen) {
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+      icon.textContent = 'remove';
+      icon.style.transform = 'rotate(180deg)';
+    }
+  };
+
+});
+</script>
+</body>
+</html>
