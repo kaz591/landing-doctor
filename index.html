@@ -78,12 +78,20 @@
             overflow-y: scroll;
             scroll-behavior: smooth;
             overscroll-behavior: none;
+            scroll-snap-type: y mandatory;
         }
 
         .snap-section {
             height: 100vh;
             position: relative;
             overflow: hidden;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        .snap-section.no-snap {
+            scroll-snap-align: none !important;
+            scroll-snap-stop: normal !important;
         }
 
         /* ── Material icons ── */
@@ -416,6 +424,7 @@
             #snap-container {
                 height: auto !important;
                 overflow-y: visible !important;
+                scroll-snap-type: none !important;
             }
 
             .snap-section {
@@ -423,6 +432,7 @@
                 min-height: 100svh;
                 overflow: visible !important;
                 padding-top: 0 !important;
+                scroll-snap-align: none !important;
                 /* No desktop snap offset on mobile */
             }
 
@@ -671,9 +681,9 @@
 
         <!-- ── 1. HERO ── -->
         <section class="snap-section" id="inicio" data-theme="dark">
-            <div class="absolute inset-0 z-0">
-                <img src="hero-doctor.png" alt="Dr. Daniel Gómez en su consultorio" class="w-full h-full object-cover"
-                    style="object-position: center center;" />
+            <div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+                <img src="hero-doctor.png" alt="Dr. Daniel Gómez en su consultorio" class="parallax-bg w-full h-full object-cover"
+                    data-speed="0.15" style="object-position: center center;" />
                 <!-- Gradiente fuerte en zona de texto (izquierda), suave en el resto -->
                 <div class="absolute inset-0"
                     style="background: linear-gradient(to right, rgba(0,15,35,0.93) 0%, rgba(0,20,45,0.82) 35%, rgba(0,20,45,0.45) 65%, rgba(0,10,25,0.15) 100%);">
@@ -775,8 +785,8 @@
             style="background:#f4f3f7;">
             <!-- Parallax Background Grid Texture -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="parallax-bg absolute inset-0 opacity-[0.03]" data-speed="0.12" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23002442\"/></svg>'); background-repeat: repeat;"></div>
-                <div class="parallax-bg absolute -right-20 -top-20 w-[400px] h-[400px] rounded-full bg-[#006b58]/5 blur-[100px]" data-speed="-0.08"></div>
+                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="0.12" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23002442\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute -right-20 -top-20 w-[400px] h-[400px] rounded-full bg-[#006b58]/12 blur-[100px]" data-speed="-0.08"></div>
             </div>
             <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 reveal">
@@ -924,7 +934,12 @@
 
         <!-- ── 4. TECNOLOGÍA ── -->
         <section class="snap-section flex items-center" id="tecnologia" data-theme="light">
-            <div class="w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
+            <!-- Parallax Background Grid Texture -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="-0.1" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23006b58\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute -right-20 -bottom-20 w-[400px] h-[400px] rounded-full bg-[#006b58]/12 blur-[100px]" data-speed="0.06"></div>
+            </div>
+            <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
                 <div class="grid grid-cols-12 gap-4">
                     <div class="col-span-12 md:col-span-7 rounded-[32px] p-10 flex flex-col justify-center reveal"
                         style="background:#eeedf1;">
@@ -1010,8 +1025,8 @@
         <section class="snap-section flex items-center" id="sobre-mi" data-theme="light" style="background:#ffffff;">
             <!-- Parallax Background Grid Texture -->
             <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                <div class="parallax-bg absolute inset-0 opacity-[0.02]" data-speed="-0.1" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23006b58\"/></svg>'); background-repeat: repeat;"></div>
-                <div class="parallax-bg absolute -left-20 -bottom-20 w-[400px] h-[400px] rounded-full bg-[#103a5f]/5 blur-[100px]" data-speed="0.06"></div>
+                <div class="parallax-bg absolute inset-0 opacity-[0.08]" data-speed="-0.1" style="background-image: url('data:image/svg+xml;utf8,<svg width=\"30\" height=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"3\" cy=\"3\" r=\"1.5\" fill=\"%23006b58\"/></svg>'); background-repeat: repeat;"></div>
+                <div class="parallax-bg absolute -left-20 -bottom-20 w-[400px] h-[400px] rounded-full bg-[#103a5f]/12 blur-[100px]" data-speed="0.06"></div>
             </div>
             <div class="relative z-10 w-full px-5 md:px-16 max-w-7xl mx-auto pt-4 md:pt-8">
                 <div class="sobre-mi-grid grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
@@ -1405,6 +1420,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 
             <!-- Footer -->
             <footer class="border-t px-5 md:px-16 py-6" style="border-color:rgba(255,255,255,0.1);">
@@ -1505,48 +1521,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // ─── JS SNAP SCROLL ───────────────────────────────────────────────
+            // ─── PARALLAX EFFECT & SCROLL LISTENER ────────────────────────────
             const container = document.getElementById('snap-container');
             const sections = Array.from(document.querySelectorAll('.snap-section'));
-            let snapTimer = null;
-            let isSnapping = false;
-
-            function getNearestSection() {
-                const scrollTop = container.scrollTop;
-                const vh = container.clientHeight;
-                let best = null, bestDist = Infinity;
-
-                // Disable snapping when scrolling inside sections taller than viewport (e.g. expanded Specialties)
-                for (let i = 0; i < sections.length; i++) {
-                    const sec = sections[i];
-                    const secHeight = sec.offsetHeight;
-                    if (secHeight > vh + 50) {
-                        // User is in the middle of a tall section - disable snap
-                        if (scrollTop > sec.offsetTop + 50 && scrollTop < sec.offsetTop + secHeight - vh - 50) {
-                            return null;
-                        }
-                    }
-                }
-
-                sections.forEach(sec => {
-                    const dist = Math.abs(sec.offsetTop - scrollTop);
-                    if (dist < bestDist) { bestDist = dist; best = sec; }
-                });
-
-                // Only snap if we're within 45% of the viewport height of a boundary
-                return (bestDist < vh * 0.45) ? best : null;
-            }
-
-            function doSnap() {
-                if (isSnapping) return;
-                const target = getNearestSection();
-                if (!target) return;
-
-                isSnapping = true;
-                container.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
-                setTimeout(() => { isSnapping = false; }, 700);
-            }
-
             const isMobile = () => window.innerWidth < 768;
 
             container.addEventListener('scroll', () => {
@@ -1556,13 +1533,15 @@
                 if (!isMobile()) {
                     document.querySelectorAll('.parallax-bg').forEach(el => {
                         const speed = parseFloat(el.getAttribute('data-speed') || '0.1');
-                        el.style.transform = `translateY(${scrollTop * speed}px)`;
+                        const section = el.closest('.snap-section');
+                        if (section) {
+                            const relativeScroll = scrollTop - section.offsetTop;
+                            el.style.transform = `translateY(${relativeScroll * speed}px)`;
+                        } else {
+                            el.style.transform = `translateY(${scrollTop * speed}px)`;
+                        }
                     });
                 }
-                
-                if (isMobile()) return; // No snap on mobile — free scroll
-                clearTimeout(snapTimer);
-                snapTimer = setTimeout(doSnap, 200);
             }, { passive: true });
 
             // ─── ADAPTIVE NAVBAR ──────────────────────────────────────────────
@@ -1598,9 +1577,7 @@
                     e.preventDefault();
                     const target = document.querySelector(href);
                     if (target) {
-                        isSnapping = true;
                         container.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
-                        setTimeout(() => { isSnapping = false; }, 800);
                     }
                 });
             });
@@ -1850,6 +1827,7 @@
                     text.textContent = 'VER TODOS LOS SERVICIOS';
                     icon.style.transform = 'rotate(0deg)';
                     sec.classList.remove('expanded-section');
+                    sec.classList.remove('no-snap');
                 } else {
                     // Expand
                     extra.classList.remove('opacity-0');
@@ -1858,6 +1836,7 @@
                     text.textContent = 'OCULTAR SERVICIOS';
                     icon.style.transform = 'rotate(90deg)';
                     sec.classList.add('expanded-section');
+                    sec.classList.add('no-snap');
                 }
             };
 
@@ -1910,6 +1889,7 @@
             let tScrollSpeed = 1;
             let tIsHovering = false;
             let tAutoScrollTimer = null;
+            let tResumeTimer = null;
 
             function startTestimonialsAutoScroll() {
                 if (tAutoScrollTimer) return;
@@ -1932,6 +1912,29 @@
             window.scrollTestimonials = function(direction) {
                 if (!tCarouselOuter) return;
                 const cardWidth = 344; // card (320px) + gap (24px)
+                const halfWidth = tCarouselOuter.scrollWidth / 2;
+
+                // Pause auto-scrolling temporarily on manual navigation
+                tIsHovering = true;
+                clearTimeout(tResumeTimer);
+                tResumeTimer = setTimeout(() => {
+                    tIsHovering = false;
+                }, 5000); // Resume auto-scroll after 5 seconds of inactivity
+
+                let currentScroll = tCarouselOuter.scrollLeft;
+
+                if (direction === -1) {
+                    // Left navigation: wrap to second half if close to the start
+                    if (currentScroll < cardWidth) {
+                        tCarouselOuter.scrollLeft = currentScroll + halfWidth;
+                    }
+                } else {
+                    // Right navigation: wrap to first half if close to the midpoint
+                    if (currentScroll >= halfWidth - 5) {
+                        tCarouselOuter.scrollLeft = currentScroll - halfWidth;
+                    }
+                }
+
                 tCarouselOuter.scrollTo({
                     left: tCarouselOuter.scrollLeft + direction * cardWidth,
                     behavior: 'smooth'
