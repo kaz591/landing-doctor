@@ -7,6 +7,9 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Work+Sans:wght@400;500&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Calendly Popup Widget Styles & JS -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <script id="tailwind-config">
   tailwind.config = {
     darkMode: "class",
@@ -918,18 +921,6 @@
   </div>
 </div>
 
-<!-- Calendly Modal Overlay -->
-<div id="calendly-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
-  <div class="bg-white rounded-[32px] max-w-4xl w-full h-[90vh] shadow-2xl border border-gray-100 transform scale-95 opacity-0 transition-all duration-300 relative flex flex-col overflow-hidden">
-    <!-- Close button -->
-    <button onclick="closeCalendlyModal()" class="absolute top-4 right-4 z-10 bg-white/80 hover:bg-white shadow rounded-full p-2 text-primary hover:text-[#006b58] transition-colors" aria-label="Cerrar calendario">
-      <span class="material-symbols-outlined text-[24px]">close</span>
-    </button>
-    <!-- Iframe -->
-    <iframe id="calendly-iframe" src="" class="w-full h-full border-0 rounded-[32px]"></iframe>
-  </div>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -1178,45 +1169,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── CALENDLY POPUP MODAL JS ──────────────────────────────────────
   window.openCalendlyModal = function() {
-    const modal = document.getElementById('calendly-modal');
-    const card = modal.querySelector('div');
-    const iframe = document.getElementById('calendly-iframe');
-    
-    if (!iframe.src) {
-      iframe.src = "https://calendly.com/newkaz591/consulta";
-    }
-    
-    modal.classList.remove('opacity-0', 'pointer-events-none');
-    card.classList.remove('scale-95', 'opacity-0');
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeCalendlyModal = function() {
-    const modal = document.getElementById('calendly-modal');
-    const card = modal.querySelector('div');
-    
-    card.classList.add('scale-95', 'opacity-0');
-    modal.classList.add('opacity-0', 'pointer-events-none');
-    
-    // Restore scrolling only if other modals or menus are not open
-    const mobileOpen = document.getElementById('mobile-menu').classList.contains('open');
-    const specialtyOpen = !document.getElementById('specialty-modal').classList.contains('pointer-events-none');
-    
-    if (!mobileOpen && !specialtyOpen) {
-      document.body.style.overflow = '';
+    if (typeof Calendly !== 'undefined') {
+      Calendly.initPopupWidget({ url: 'https://calendly.com/newkaz591/consulta' });
+    } else {
+      // Fallback
+      window.open('https://calendly.com/newkaz591/consulta', '_blank');
     }
   };
 
-  // Close modals on escape key or clicking outside
+  // Close specialty modal on clicking outside
   document.getElementById('specialty-modal').addEventListener('click', (e) => {
     if (e.target === document.getElementById('specialty-modal')) {
       window.closeSpecialtyModal();
-    }
-  });
-
-  document.getElementById('calendly-modal').addEventListener('click', (e) => {
-    if (e.target === document.getElementById('calendly-modal')) {
-      window.closeCalendlyModal();
     }
   });
 
