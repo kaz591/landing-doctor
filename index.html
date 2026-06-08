@@ -225,6 +225,8 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  #mobile-menu { display: none; }
+
   /* ═══════════════════════════════════════════════════════════
      MOBILE RESPONSIVE  (< 768px)
   ═══════════════════════════════════════════════════════════ */
@@ -244,10 +246,17 @@
       min-height: 580px !important;
       overflow: hidden !important;
     }
+    #inicio img {
+      object-position: 80% center !important;
+    }
+    .doctor-photo-wrap img {
+      object-position: center 30% !important;
+    }
     /* Testimonials keeps overflow:hidden for carousel */
     #contacto {
       height: auto !important;
       min-height: auto !important;
+      overflow: visible !important;
     }
 
     /* Navbar compact */
@@ -420,24 +429,24 @@
 
   <!-- ── 2. MÉTRICAS ── -->
   <section class="snap-section flex items-center" id="metricas" data-theme="light">
-    <div class="w-full px-16 max-w-7xl mx-auto">
-      <div class="bg-white rounded-[36px] p-12 shadow-xl shadow-primary/5 border border-gray-100 mb-14 reveal">
-        <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
-          <div class="text-center px-8 py-4">
-            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">98%</div>
-            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">SATISFACCIÓN</div>
+    <div class="w-full px-5 md:px-16 max-w-7xl mx-auto">
+      <div class="bg-white rounded-[24px] md:rounded-[36px] p-6 md:p-12 shadow-xl shadow-primary/5 border border-gray-100 mb-8 md:mb-14 reveal">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0 md:divide-x divide-gray-100">
+          <div class="text-center px-2 md:px-8 py-2 md:py-4">
+            <div class="text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">98%</div>
+            <div class="text-[10px] md:text-xs font-semibold text-on-surface-variant tracking-wider md:tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">SATISFACCIÓN</div>
           </div>
-          <div class="text-center px-8 py-4">
-            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">2k+</div>
-            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">PACIENTES</div>
+          <div class="text-center px-2 md:px-8 py-2 md:py-4 border-l md:border-l-0 border-gray-100">
+            <div class="text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">2k+</div>
+            <div class="text-[10px] md:text-xs font-semibold text-on-surface-variant tracking-wider md:tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">PACIENTES</div>
           </div>
-          <div class="text-center px-8 py-4">
-            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">15+</div>
-            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">AÑOS DE EXP.</div>
+          <div class="text-center px-2 md:px-8 py-2 md:py-4 border-t md:border-t-0 border-gray-100 pt-6 md:pt-4">
+            <div class="text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">15+</div>
+            <div class="text-[10px] md:text-xs font-semibold text-on-surface-variant tracking-wider md:tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">AÑOS DE EXP.</div>
           </div>
-          <div class="text-center px-8 py-4">
-            <div class="text-5xl font-bold text-primary mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">4.9★</div>
-            <div class="text-xs font-semibold text-on-surface-variant tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">CALIFICACIÓN</div>
+          <div class="text-center px-2 md:px-8 py-2 md:py-4 border-t border-l md:border-t-0 md:border-l-0 border-gray-100 pt-6 md:pt-4">
+            <div class="text-3xl md:text-5xl font-bold text-primary mb-1 md:mb-2" style="font-family:'Plus Jakarta Sans',sans-serif;">4.9★</div>
+            <div class="text-[10px] md:text-xs font-semibold text-on-surface-variant tracking-wider md:tracking-widest" style="font-family:'Plus Jakarta Sans',sans-serif;">CALIFICACIÓN</div>
           </div>
         </div>
       </div>
@@ -451,7 +460,7 @@
 
   <!-- ── 3. ESPECIALIDADES ── -->
   <section class="snap-section flex items-center" id="especialidades" data-theme="light" style="background:#f4f3f7;">
-    <div class="w-full px-16 max-w-7xl mx-auto py-8">
+    <div class="w-full px-5 md:px-16 max-w-7xl mx-auto py-8">
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 reveal">
         <div>
           <span class="text-xs font-semibold tracking-widest block mb-3" style="color:#006b58; font-family:'Plus Jakarta Sans',sans-serif;">NUESTRAS ESPECIALIDADES</span>
@@ -560,14 +569,14 @@
             <div class="absolute inset-0" style="background:linear-gradient(to top, rgba(0,36,66,0.35) 0%, transparent 60%);"></div>
           </div>
           <!-- Badge flotante -->
-          <div class="absolute -bottom-5 -right-5 bg-white rounded-2xl p-5 shadow-xl shadow-primary/10 border border-gray-100">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background:#006b58;">
-                <span class="material-symbols-outlined text-white" style="font-size:18px;">verified</span>
+          <div class="absolute -bottom-3 -right-3 md:-bottom-5 md:-right-5 bg-white rounded-2xl p-3 md:p-5 shadow-xl shadow-primary/10 border border-gray-100">
+            <div class="flex items-center gap-2 md:gap-3">
+              <div class="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:#006b58;">
+                <span class="material-symbols-outlined text-white text-[16px] md:text-[18px]">verified</span>
               </div>
               <div>
-                <div class="text-xs font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">Certificado</div>
-                <div class="text-xs text-on-surface-variant">Consejo Mexicano de Ortopedia</div>
+                <div class="text-[10px] md:text-xs font-bold text-primary" style="font-family:'Plus Jakarta Sans',sans-serif;">Certificado</div>
+                <div class="text-[9px] md:text-xs text-on-surface-variant">Consejo Mexicano de Ortopedia</div>
               </div>
             </div>
           </div>
